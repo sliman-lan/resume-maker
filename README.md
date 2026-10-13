@@ -29,7 +29,7 @@ Follow these steps to run the project on your local machine:
 
 1. **Clone the repository:**
     ```bash
-    git clone [https://github.com/sliman-lan/your-repo-name.git](https://github.com/YOUR_USERNAME/your-repo-name.git)
+    git clone [https://github.com/sliman-lan/resume-maker.git](https://github.com/sliman-lan/resume-maker.git)
     ```
 2. **Navigate to the project directory:**
     ```bash
