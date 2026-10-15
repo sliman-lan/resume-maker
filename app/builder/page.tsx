@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { PersonalInfoForm } from '@/components/builder/PersonalInfoForm';
-import { ClassicTemplate } from '@/components/preview/ResumePreview';
+import { ResumePreview } from '@/components/preview/ResumePreview';
 
 export default function BuilderPage() {
   const handlePrint = () => {
@@ -34,7 +34,7 @@ export default function BuilderPage() {
 
         {/* Live Preview Panel - سيمتد ليملأ الشاشة وحدده فقط عند الطباعة */}
         <div className="lg:col-span-7 bg-gray-200 p-6 rounded-xl overflow-auto max-h-[85vh] sticky top-4 print:p-0 print:bg-white print:overflow-visible print:max-h-none print:w-full print:col-span-12">
-          <ClassicTemplate />
+          <ResumePreview />
         </div>
       </div>
     </main>
