@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { PersonalInfoForm } from '@/components/builder/PersonalInfoForm';
-import { ClassicTemplate } from '@/components/preview/ClassicTemplate';
+import { ClassicTemplate } from '@/components/preview/ResumePreview';
 
 export default function BuilderPage() {
   const handlePrint = () => {

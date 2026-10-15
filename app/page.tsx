@@ -7,7 +7,7 @@ import { EducationForm } from '@/components/builder/EducationForm';
 import { ProjectsForm } from '@/components/builder/ProjectsForm';
 import { SkillsForm } from '@/components/builder/SkillsForm';
 import { TemplateCustomizer } from '@/components/builder/TemplateCustomizer';
-import { ResumePreview } from '@/components/preview/ClassicTemplate';
+import { ResumePreview } from '@/components/preview/ResumePreview';
 
 export default function Home() {
   const handlePrint = () => {
