@@ -1,24 +1,42 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { ResumeData, ExperienceItem, EducationItem, PersonalInfo } from '@/types/resume';
 
+export interface ProjectItem {
+  id: string;
+  title: string;
+  techStack: string;
+  githubLink?: string;
+  liveLink?: string;
+  description: string;
+}
+
 interface ResumeStore {
-  resumeData: ResumeData;
+  resumeData: ResumeData & { projects: ProjectItem[] };
+  template: 'classic' | 'modern' | 'minimal';
+  accentColor: string;
+  language: 'ar' | 'en';
+  setTemplate: (template: 'classic' | 'modern' | 'minimal') => void;
+  setAccentColor: (color: string) => void;
+  setLanguage: (lang: 'ar' | 'en') => void;
   updatePersonalInfo: (info: Partial<PersonalInfo>) => void;
   addExperience: (item: ExperienceItem) => void;
   removeExperience: (id: string) => void;
   addEducation: (item: EducationItem) => void;
   removeEducation: (id: string) => void;
+  addProject: (item: ProjectItem) => void;
+  removeProject: (id: string) => void;
   setSkills: (skills: string[]) => void;
 }
 
-const initialData: ResumeData = {
+const initialData = {
   personalInfo: {
-    fullName: 'أحمد محمد',
-    email: 'ahmed@example.com',
-    phone: '+963 900 000 000',
-    location: 'دمشق، سوريا',
+    fullName: 'ريم علي',
+    email: 'reemali250@gmail.com',
+    phone: '+963 930 059 465',
+    location: 'اللاذقية، سوريا',
     website: 'https://github.com',
-    summary: 'مطور واجهات أمامية (Frontend Developer) شغوف ببناء تطبيقات ويب تفاعلية وسريعة باستخدام Next.js و React.',
+    summary: 'مطور واجهات أمامية Frontend Developer شغوف ببناء تطبيقات ويب تفاعلية وسريعة باستخدام Next.js و React.',
   },
   experience: [
     {
@@ -39,57 +57,97 @@ const initialData: ResumeData = {
       graduationDate: '2023',
     },
   ],
+  projects: [
+    {
+      id: '1',
+      title: 'Resume & Portfolio Builder',
+      techStack: 'Next.js, TypeScript, Zustand, Tailwind CSS',
+      githubLink: 'https://github.com',
+      liveLink: 'https://resume-maker.vercel.app',
+      description: 'منصة تفاعلية لإنشاء وتصدير السيرة الذاتية مع معاينة حية وتصدير PDF بدون مكتبات ثقيلة.',
+    },
+  ],
   skills: ['React.js', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Git & GitHub', 'JavaScript'],
 };
 
-export const useResumeStore = create<ResumeStore>((set) => ({
-  resumeData: initialData,
-  
-  updatePersonalInfo: (info) =>
-    set((state) => ({
-      resumeData: {
-        ...state.resumeData,
-        personalInfo: { ...state.resumeData.personalInfo, ...info },
-      },
-    })),
+export const useResumeStore = create<ResumeStore>()(
+  persist(
+    (set) => ({
+      resumeData: initialData,
+      template: 'classic',
+      accentColor: 'blue',
+      language: 'ar',
 
-  addExperience: (item) =>
-    set((state) => ({
-      resumeData: {
-        ...state.resumeData,
-        experience: [...state.resumeData.experience, item],
-      },
-    })),
+      setTemplate: (template) => set({ template }),
+      setAccentColor: (accentColor) => set({ accentColor }),
+      setLanguage: (language) => set({ language }),
 
-  removeExperience: (id) =>
-    set((state) => ({
-      resumeData: {
-        ...state.resumeData,
-        experience: state.resumeData.experience.filter((exp) => exp.id !== id),
-      },
-    })),
+      updatePersonalInfo: (info) =>
+        set((state) => ({
+          resumeData: {
+            ...state.resumeData,
+            personalInfo: { ...state.resumeData.personalInfo, ...info },
+          },
+        })),
 
-  addEducation: (item) =>
-    set((state) => ({
-      resumeData: {
-        ...state.resumeData,
-        education: [...state.resumeData.education, item],
-      },
-    })),
+      addExperience: (item) =>
+        set((state) => ({
+          resumeData: {
+            ...state.resumeData,
+            experience: [...state.resumeData.experience, item],
+          },
+        })),
 
-  removeEducation: (id) =>
-    set((state) => ({
-      resumeData: {
-        ...state.resumeData,
-        education: state.resumeData.education.filter((edu) => edu.id !== id),
-      },
-    })),
+      removeExperience: (id) =>
+        set((state) => ({
+          resumeData: {
+            ...state.resumeData,
+            experience: state.resumeData.experience.filter((exp) => exp.id !== id),
+          },
+        })),
 
-  setSkills: (skills) =>
-    set((state) => ({
-      resumeData: {
-        ...state.resumeData,
-        skills,
-      },
-    })),
-}));
+      addEducation: (item) =>
+        set((state) => ({
+          resumeData: {
+            ...state.resumeData,
+            education: [...state.resumeData.education, item],
+          },
+        })),
+
+      removeEducation: (id) =>
+        set((state) => ({
+          resumeData: {
+            ...state.resumeData,
+            education: state.resumeData.education.filter((edu) => edu.id !== id),
+          },
+        })),
+
+      addProject: (item) =>
+        set((state) => ({
+          resumeData: {
+            ...state.resumeData,
+            projects: [...(state.resumeData.projects || []), item],
+          },
+        })),
+
+      removeProject: (id) =>
+        set((state) => ({
+          resumeData: {
+            ...state.resumeData,
+            projects: (state.resumeData.projects || []).filter((proj) => proj.id !== id),
+          },
+        })),
+
+      setSkills: (skills) =>
+        set((state) => ({
+          resumeData: {
+            ...state.resumeData,
+            skills,
+          },
+        })),
+    }),
+    {
+      name: 'resume-builder-storage', // الاسم الذي ستُحفظ به البيانات في localStorage
+    }
+  )
+);
