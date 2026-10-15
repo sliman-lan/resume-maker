@@ -5,8 +5,10 @@ import { PersonalInfoForm } from '@/components/builder/PersonalInfoForm';
 import { ExperienceForm } from '@/components/builder/ExperienceForm';
 import { EducationForm } from '@/components/builder/EducationForm';
 import { ProjectsForm } from '@/components/builder/ProjectsForm';
+import { CertificatesForm } from '@/components/builder/CertificatesForm';
 import { SkillsForm } from '@/components/builder/SkillsForm';
 import { TemplateCustomizer } from '@/components/builder/TemplateCustomizer';
+import { ResumeStrength } from '@/components/builder/ResumeStrength';
 import { ResumePreview } from '@/components/preview/ResumePreview';
 
 export default function Home() {
@@ -19,7 +21,7 @@ export default function Home() {
       <header className="max-w-7xl mx-auto mb-6 flex justify-between items-center border-b border-gray-200 dark:border-gray-800 pb-4 print:hidden">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">منشئ السيرة الذاتية الاحترافي</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">اختر القالب، اختر اللغة، أضف مشاريعك وحافظ على بياناتك محلياً</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">إدارة متكاملة، مقياس قوة الـ CV، قوالب متعددة، ودعم كامل للوضع الليلي</p>
         </div>
         <button
           onClick={handlePrint}
@@ -30,13 +32,15 @@ export default function Home() {
       </header>
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* لوحة التحكم */}
+        {/* لوحة التحكم والمدخلات */}
         <div className="lg:col-span-5 space-y-6 print:hidden">
+          <ResumeStrength />
           <TemplateCustomizer />
           <PersonalInfoForm />
           <ProjectsForm />
           <ExperienceForm />
           <EducationForm />
+          <CertificatesForm />
           <SkillsForm />
         </div>
 

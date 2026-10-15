@@ -11,8 +11,16 @@ export interface ProjectItem {
   description: string;
 }
 
+export interface CertificateItem {
+  id: string;
+  title: string;
+  issuer: string;
+  date: string;
+  link?: string;
+}
+
 interface ResumeStore {
-  resumeData: ResumeData & { projects: ProjectItem[] };
+  resumeData: ResumeData & { projects: ProjectItem[]; certificates: CertificateItem[] };
   template: 'classic' | 'modern' | 'minimal';
   accentColor: string;
   language: 'ar' | 'en';
@@ -26,50 +34,59 @@ interface ResumeStore {
   removeEducation: (id: string) => void;
   addProject: (item: ProjectItem) => void;
   removeProject: (id: string) => void;
+  addCertificate: (item: CertificateItem) => void;
+  removeCertificate: (id: string) => void;
   setSkills: (skills: string[]) => void;
 }
 
 const initialData = {
   personalInfo: {
-    fullName: 'ريم علي',
-    email: 'reemali250@gmail.com',
-    phone: '+963 930 059 465',
-    location: 'اللاذقية، سوريا',
+    fullName: 'اسمك الكامل',
+    email: 'email@example.com',
+    phone: '+963 000 000 000',
+    location: 'المدينة، الدولة',
     website: 'https://github.com',
-    summary: 'مطور واجهات أمامية Frontend Developer شغوف ببناء تطبيقات ويب تفاعلية وسريعة باستخدام Next.js و React.',
+    summary: 'اكتب نبذة مهنية عامة هنا...',
   },
   experience: [
     {
       id: '1',
-      company: 'شركة التقنية المتقدمة',
-      position: 'مطور Frontend',
-      startDate: '2023-04',
+      company: 'اسم الشركة',
+      position: 'المسمى الوظيفي',
+      startDate: '2024-01',
       endDate: 'Present',
       current: true,
-      description: 'تطوير واجهات المستخدم باستخدام React و Next.js مع ربطها بالـ APIs المختلفة.',
+      description: 'وصف المهام والخبرات...',
     },
   ],
   education: [
     {
       id: '1',
-      institution: 'جامعة تشرين',
-      degree: 'بكالوريوس في هندسة علوم الحاسوب',
-      graduationDate: '2023',
+      institution: 'اسم الجامعة أو المعهد',
+      degree: 'الدرجة العلمية',
+      graduationDate: '2024',
     },
   ],
   projects: [
     {
       id: '1',
-      title: 'Resume & Portfolio Builder',
-      techStack: 'Next.js, TypeScript, Zustand, Tailwind CSS',
+      title: 'اسم المشروع',
+      techStack: 'React, Next.js',
       githubLink: 'https://github.com',
-      liveLink: 'https://resume-maker.vercel.app',
-      description: 'منصة تفاعلية لإنشاء وتصدير السيرة الذاتية مع معاينة حية وتصدير PDF بدون مكتبات ثقيلة.',
+      liveLink: '',
+      description: 'وصف موجز للمشروع...',
     },
   ],
-  skills: ['React.js', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Git & GitHub', 'JavaScript'],
+  certificates: [
+    {
+      id: '1',
+      title: 'اسم الشهادة',
+      issuer: 'الجهة المانحة',
+      date: '2024',
+    },
+  ],
+  skills: ['JavaScript', 'React.js', 'Next.js', 'Tailwind CSS'],
 };
-
 export const useResumeStore = create<ResumeStore>()(
   persist(
     (set) => ({
@@ -138,6 +155,22 @@ export const useResumeStore = create<ResumeStore>()(
           },
         })),
 
+      addCertificate: (item) =>
+        set((state) => ({
+          resumeData: {
+            ...state.resumeData,
+            certificates: [...(state.resumeData.certificates || []), item],
+          },
+        })),
+
+      removeCertificate: (id) =>
+        set((state) => ({
+          resumeData: {
+            ...state.resumeData,
+            certificates: (state.resumeData.certificates || []).filter((cert) => cert.id !== id),
+          },
+        })),
+
       setSkills: (skills) =>
         set((state) => ({
           resumeData: {
@@ -148,7 +181,7 @@ export const useResumeStore = create<ResumeStore>()(
     }),
     {
       name: 'resume-builder-storage',
-      storage: createJSONStorage(() => (typeof window !== 'undefined' ? localStorage : sessionStorage)), // 🛡️ حماية الـ SSR من الوصول للـ LocalStorage
+      storage: createJSONStorage(() => (typeof window !== 'undefined' ? localStorage : sessionStorage)),
     }
   )
 );

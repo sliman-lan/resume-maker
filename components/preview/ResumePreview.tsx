@@ -5,7 +5,7 @@ import { useResumeStore } from '../store/useResumeStore';
 
 export const ResumePreview = () => {
   const { resumeData, template, accentColor, language } = useResumeStore();
-  const { personalInfo, experience, education, skills, projects } = resumeData;
+  const { personalInfo, experience, education, skills, projects, certificates } = resumeData;
 
   const isAr = language === 'ar';
   const dir = isAr ? 'rtl' : 'ltr';
@@ -18,6 +18,7 @@ export const ResumePreview = () => {
     education: isAr ? 'التعليم والمؤهلات' : 'Education',
     skills: isAr ? 'المهارات والتقنيات' : 'Technical Skills',
     present: isAr ? 'حتى الآن' : 'Present',
+    certificates: isAr ? 'الشهادات والدورات التدريبية' : 'Certificates',
   };
 
   const colorClasses: Record<string, { text: string; border: string; bgBadge: string }> = {
@@ -109,7 +110,25 @@ export const ResumePreview = () => {
           </div>
         </section>
       )}
-
+  {/* Certificates */}
+{certificates && certificates.length > 0 && (
+  <section className="mb-6">
+    <h2 className={`text-lg font-bold ${currentTheme.text} mb-3 border-b border-gray-200 pb-1`}>
+      {language === 'ar' ? 'الشهادات والدورات التدريبية' : 'Certificates'}
+    </h2>
+    <div className="space-y-2">
+      {certificates.map((cert) => (
+        <div key={cert.id} className="flex justify-between items-baseline">
+          <div>
+            <h3 className="font-bold text-sm text-gray-800">{cert.title}</h3>
+            <p className="text-xs text-gray-600">{cert.issuer}</p>
+          </div>
+          <span className="text-xs text-gray-500">{cert.date}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+)}
       {/* Skills */}
       {skills.length > 0 && (
         <section className="mb-6">
