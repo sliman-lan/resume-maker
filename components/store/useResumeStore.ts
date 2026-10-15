@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import { ResumeData, ExperienceItem, EducationItem, PersonalInfo } from '@/types/resume';
 
 export interface ProjectItem {
@@ -147,7 +147,8 @@ export const useResumeStore = create<ResumeStore>()(
         })),
     }),
     {
-      name: 'resume-builder-storage', // الاسم الذي ستُحفظ به البيانات في localStorage
+      name: 'resume-builder-storage',
+      storage: createJSONStorage(() => (typeof window !== 'undefined' ? localStorage : sessionStorage)), // 🛡️ حماية الـ SSR من الوصول للـ LocalStorage
     }
   )
 );
