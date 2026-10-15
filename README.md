@@ -59,3 +59,7 @@ Follow these steps to run the project on your local machine:
     Sliman Nziha
 
     Frontend Developer
+
+## Website
+
+    -- [visit](https://resume-maker-xi-eight.vercel.app/)

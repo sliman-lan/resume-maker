@@ -15,11 +15,11 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-50 p-4 md:p-8" dir="rtl">
-      <header className="max-w-7xl mx-auto mb-6 flex justify-between items-center border-b pb-4 print:hidden">
+    <main className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 md:p-8 text-gray-900 dark:text-gray-100 transition-colors" dir="rtl">
+      <header className="max-w-7xl mx-auto mb-6 flex justify-between items-center border-b border-gray-200 dark:border-gray-800 pb-4 print:hidden">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">منشئ السيرة الذاتية الاحترافي</h1>
-          <p className="text-sm text-gray-500">اختر القالب، اختر اللغة، أضف مشاريعك وحافظ على بياناتك محلياً</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">منشئ السيرة الذاتية الاحترافي</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400">اختر القالب، اختر اللغة، أضف مشاريعك وحافظ على بياناتك محلياً</p>
         </div>
         <button
           onClick={handlePrint}
@@ -41,7 +41,7 @@ export default function Home() {
         </div>
 
         {/* المعاينة الحية */}
-        <div className="lg:col-span-7 bg-gray-200 p-6 rounded-xl overflow-auto max-h-[85vh] sticky top-4 print:p-0 print:bg-white print:overflow-visible print:max-h-none print:w-full print:col-span-12">
+        <div className="lg:col-span-7 bg-gray-200 dark:bg-gray-800 p-6 rounded-xl overflow-auto max-h-[85vh] sticky top-4 print:p-0 print:bg-white print:overflow-visible print:max-h-none print:w-full print:col-span-12 transition-colors">
           <ResumePreview />
         </div>
       </div>
